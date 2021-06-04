@@ -48,22 +48,20 @@ public abstract class GenericMeteorologicalBulletinImpl implements GenericMeteor
     public static class Builder extends GenericMeteorologicalBulletinImpl_Builder {
         @Deprecated
         public Builder() {
+            this.setTransmissionSequenceNumber("");
         }
         public Optional<Integer> getTransmissionSequenceNumberAsInt() {
             try {
                 return Optional.of(Integer.parseInt(getTransmissionSequenceNumber()));
-            } catch(NumberFormatException e){
+            } catch(final NumberFormatException e){
                 return Optional.empty();
             }
         }
-        public Builder setTransmissionSequenceNumberAsInt(int transmissionSequenceNumber) throws IllegalArgumentException {
-            if(String.valueOf(transmissionSequenceNumber).length() > 3 || transmissionSequenceNumber < 0) {
-                throw new IllegalArgumentException("Transmission sequence number is out of range.");
-            }
-            return this.setTransmissionSequenceNumber(String.format("%03d", transmissionSequenceNumber));
+        public Builder setTransmissionSequenceNumberAsInt(final int transmissionSequenceNumber) throws IllegalArgumentException {
+            return setTransmissionSequenceNumberAsInt(transmissionSequenceNumber, 3);
         }
 
-        public Builder setTransmissionSequenceNumberAsInt(int transmissionSequenceNumber, int numberOfDigits) throws IllegalArgumentException {
+        public Builder setTransmissionSequenceNumberAsInt(final int transmissionSequenceNumber, final int numberOfDigits) throws IllegalArgumentException {
             if(String.valueOf(transmissionSequenceNumber).length() > numberOfDigits || transmissionSequenceNumber < 0) {
                 throw new IllegalArgumentException("Transmission sequence number is out of range.");
             }
