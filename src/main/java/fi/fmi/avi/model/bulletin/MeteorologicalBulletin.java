@@ -19,4 +19,5 @@ public interface MeteorologicalBulletin<T extends AviationWeatherMessage> extend
 
     Set<ChronoField> getTimeStampFields();
 
+    String getTransmissionSequenceNumber();
 }

@@ -49,6 +49,26 @@ public abstract class GenericMeteorologicalBulletinImpl implements GenericMeteor
         @Deprecated
         public Builder() {
         }
+        public Optional<Integer> getTransmissionSequenceNumberAsInt() {
+            try {
+                return Optional.of(Integer.parseInt(getTransmissionSequenceNumber()));
+            } catch(NumberFormatException e){
+                return Optional.empty();
+            }
+        }
+        public Builder setTransmissionSequenceNumberAsInt(int transmissionSequenceNumber) throws IllegalArgumentException {
+            if(String.valueOf(transmissionSequenceNumber).length() > 3 || transmissionSequenceNumber < 0) {
+                throw new IllegalArgumentException("Transmission sequence number is out of range.");
+            }
+            return this.setTransmissionSequenceNumber(String.format("%03d", transmissionSequenceNumber));
+        }
+
+        public Builder setTransmissionSequenceNumberAsInt(int transmissionSequenceNumber, int numberOfDigits) throws IllegalArgumentException {
+            if(String.valueOf(transmissionSequenceNumber).length() > numberOfDigits || transmissionSequenceNumber < 0) {
+                throw new IllegalArgumentException("Transmission sequence number is out of range.");
+            }
+            return this.setTransmissionSequenceNumber(String.format("%0" + numberOfDigits + "d", transmissionSequenceNumber));
+        }
 
         public static Builder from(final GenericMeteorologicalBulletin value) {
             if (value instanceof GenericMeteorologicalBulletinImpl) {
